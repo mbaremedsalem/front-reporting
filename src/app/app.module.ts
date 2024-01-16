@@ -11,11 +11,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AcueilComponent } from './acueil/acueil.component';
 @NgModule({
   declarations: [
     AppComponent,
     BalanceComponent,
     FluxComponent,
+    AcueilComponent,
 
   ],
   imports: [
