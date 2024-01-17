@@ -12,17 +12,7 @@
     flex: 1 1 auto;
   }
   
-  .search-input{
-    padding-left: 20px;
-    padding-top: 20px;
-    width: 100%;
-    height: 60px;
-    border-radius: 30px;
-  }
-  .search-input {
-    height: 80px; /* Ajustez la hauteur à votre préférence */
-  }
-    
+ 
   footer {
   background-color: #333;
   color: #fff;
@@ -215,6 +205,38 @@
     margin-bottom: 0;
     list-style-type: none;
   }
+
+  
+
+  .search-input-container {
+    display: flex;
+    align-items: center;
+    max-width: 300px; /* Ajustez la largeur maximale selon vos besoins */
+    margin: 0 auto; /* Pour centrer horizontalement */
+  }
+  
+  .search-input {
+    flex: 1;
+    height:30px; /* Ajustez la hauteur selon vos besoins */
+    width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 30px 5px 10px; /* Ajoutez de l'espace à droite pour l'icône */
+  }
+  
+  .example-icon-sarche{
+    position: relative;
+    left: -30px; /* Ajustez la position pour aligner l'icône à la fin de l'input */
+    background-color: transparent; 
+    border: none;
+   
+  }
+  
+  .mat-icontop-searche {
+    width: 22px; /* Ajustez la largeur de l'icône selon vos besoins */
+    height: 22px; /* Ajustez la hauteur de l'icône selon vos besoins */
+  }
+ 
   
 
 

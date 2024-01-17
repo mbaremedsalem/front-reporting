@@ -16,20 +16,43 @@
          
         </div>
         <div class="navigation-menu">
-          <a mat-list-item (click)="reloadPage('/home-admin')" [routerLink]="['/acueil/balance']" [ngClass]="'primary-list-item'">
+          <a mat-list-item [ngClass]="{'primary-list-item': !showDocuments}" (click)="toggleDocuments()" >
             
-            <img src="assets/icons/justice-scale.png" class="mat-iconleft" width="30px" height="30px" alt=""> Balance General
+            <img src="assets/icons/justice-scale.png" class="mat-iconleft" width="30px" height="30px" alt=""> Balance 
           </a>
-     
-          <a mat-list-item [routerLink]="['/home-admin/direction-admin']" [ngClass]="'primary-list-item'">
-            <img src="assets/icons/bank-account.png" class="mat-iconleft" width="30px" height="30px" alt=""> Compte 
-          </a>
+          <div *ngIf="showDocuments" class="document-tree">
+            <ul>
+                <li><a [routerLink]="['/acueil/balance-general-annuel']">Balance General Annuel</a></li>
+                <li><a [routerLink]="['/acueil/balance-general-mensuel']">Balance General Mensuel</a></li>
+                <li><a [routerLink]="['/acueil/balance-detaille-annuel']">Balance Detaille Annuel </a></li>
+                <li><a [routerLink]="['/acueil/balance-detaille-manuel']">Balance Detaille Mensuel </a></li>             
+            </ul>
+        </div>
 
-          <a mat-list-item [routerLink]="['/home-admin/Archive-admin']" [ngClass]="'primary-list-item'">
-            <img src="assets/icons/flux.png" class="mat-iconleft" width="30px" height="30px" alt=""> flux
-
+        <a mat-list-item [ngClass]="{'primary-list-item': !showFluxs}" (click)="toggleFlux()" >
             
+          <img src="assets/icons/flux.png" class="mat-iconleft" width="30px" height="30px" alt=""> Balance 
+        </a>
+        <div *ngIf="showFluxs" class="document-tree">
+          <ul>
+            <li><a [routerLink]="['/acueil/flux-entrant']">Flux Entrant</a></li>
+            <li><a [routerLink]="['/acueil/flux-sortant']">Flux Sortants</a></li>           
+          </ul>
+      </div>
+
+          <!-- <a mat-list-item [ngClass]="{'primary-list-item': !showFluxs}" (click)="toggleFlux()" >
+            <img src="assets/icons/flux.png" class="mat-iconleft" width="30px" height="30px" alt="">Flux
           </a>
+          <div *ngIf="!toggleFlux" class="document-tree">
+            <ul>
+                <li><a [routerLink]="['/acueil/balance-general-annuel']">Flux Entrant</a></li>
+                <li><a [routerLink]="['/acueil/balance-general-mensuel']">Flux Sortants</a></li>     
+            </ul>
+          </div> -->
+
+        <a mat-list-item [routerLink]="['/home-admin/direction-admin']" [ngClass]="'primary-list-item'">
+          <img src="assets/icons/bank-account.png" class="mat-iconleft" width="30px" height="30px" alt=""> Compte 
+        </a>
 
           <a mat-list-item [routerLink]="['/home-admin/profile-admin']" [ngClass]="'primary-list-item'">
             <img src="assets/icons/user.png" class="mat-iconleft" width="30px" height="30px" alt=""> Profile
@@ -45,38 +68,28 @@
     </mat-sidenav>
   
     <mat-sidenav-content >
-        <mat-toolbar style="height: 100px; color: white; background-color:#314905;" >
+        <mat-toolbar style="height: 80px; color: white; background-color:#314905;" >
             <button mat-icon-button (click)="sidenav.toggle()" class="example-icon" aria-label="Example icon-button with menu icon">
-
             <img src="assets/icons/main-menu.png" class="mat-icontop" width="30px" height="30px" alt=""> 
-
             </button>
             <span style="padding-bottom:15px;">Reporting</span>
             <span class="example-spacer"></span>
-
-          <!-- <mat-form-field class="search-input" appearance="outline">
-            <input matInput placeholder="Search" >
-            <button class="example-icon" mat-button matSuffix>
-            <img src="assets/icons/search.png" class="mat-icontop" width="30px" height="30px" alt=""> 
-            </button>
-          </mat-form-field> -->
-            <button mat-icon-button class="example-icon-share favorite-icon" aria-label="Example icon-button with heart icon" (click)="logout()">
-               
+          
+          <div class="search-input-container">
+            <input type="text" placeholder="Rechercher..." class="search-input">
+          </div>
+          
+          <button  class="example-icon-sarche" >
+                <img src="assets/icons/search.png" class="mat-icontop-searche" width="30px" height="30px" alt=""> 
+          </button>
+          <button mat-icon-button class="example-icon-share favorite-icon"  >
             <img src="assets/icons/logout-white.png" class="mat-icontop" width="30px" height="30px" alt=""> 
-
             </button>
             <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
             <img src="assets/icons/notification.png" class="mat-icontop" width="30px" height="30px" alt=""> 
-
-            </button>
+          </button>
           </mat-toolbar>
 
-
-  
-
-
-      
-       
 
       <div class="content">
         <div *ngIf="isHomePage">

@@ -15,6 +15,7 @@ export class AcueilComponent {
   documents: any[] = [];
   useTraditionalTable = false;
   showDocuments = false;
+  showFluxs = false;
 
 
   constructor(private router: Router, private route: ActivatedRoute) {
@@ -27,7 +28,6 @@ export class AcueilComponent {
     });
   }
 
-
   removeToken() {
     this.token = null;
     localStorage.removeItem('access');
@@ -36,18 +36,24 @@ export class AcueilComponent {
   logout() {
     // Appel de la méthode de déconnexion du service d'authentification
     this.removeToken();
-
     // Redirigez l'utilisateur vers la page de connexion ou toute autre page appropriée après la déconnexion.
     // Vous pouvez utiliser le routeur Angular pour cela.
     this.router.navigate(['/login']);
   }
   reloadPage(targetRoute: string) {
     const currentRoute = this.router.url;
-  
     // Vérifiez si la route actuelle est la même que la cible
     if (currentRoute === targetRoute) {
       // Si la route est la même, rechargez la page
       window.location.reload();
     }
 }
+
+toggleDocuments() {
+  this.showDocuments = !this.showDocuments;
+}
+toggleFlux() {
+  this.showFluxs = !this.showFluxs;
+}
+
 }
