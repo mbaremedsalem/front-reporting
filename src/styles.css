@@ -15,7 +15,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-style: normal;
     font-display: block;
   }
-  
+
   .feather {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'feather' !important;
