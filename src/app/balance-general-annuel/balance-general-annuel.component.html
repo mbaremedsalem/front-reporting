@@ -1,1 +1,59 @@
-<p>balance works!</p>
+<div class="flex-container">
+    <div class="search-bar">
+      <input type="text" placeholder="Rechercher" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()"/>
+    </div>
+    <div class="page-content" style="padding-left: 0px; padding-bottom: 10px;">
+      <button style="color: white; background-color: #314905; border-radius: 10px; width: 200px; height: 50px;" mat-raised-button class="example-icon" >
+        <img src="assets/icons/export.png" class="mat-iconleft" width="20px" height="20px" alt="">
+
+      </button>
+    </div>
+  </div>
+  
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>compte</th>
+          <th>intituleCompteComptable</th>
+          <th>compteBancaireClient</th>
+          <th>intituleCompteBancaire</th>
+          <th>resident</th>
+          <th>devise</th>
+          <th>activiteClient</th>
+          <th>secteurActiviteClient</th>
+          <th>soldeDebiteur</th>
+          <th>soldeCrediteur</th>
+
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let note of dataSource.filteredData">
+          
+              <div class="actions" *ngIf="note.isSelected">
+                <!-- <button mat-icon-button class="example-icon-up" (click)="openConfirmationDialog(note.id)">
+                <span><img src="assets/icons/delete.png" width="20px" height="20px" alt="Supprimer"></span>
+              </button> -->
+
+              <button mat-icon-button class="example-icon-up" (click)="openUpdateDialog(note.id)">
+              <span><img src="assets/icons/edit.png" class="mat-iconleft" width="22px" height="24px" alt=""></span>
+              </button>
+            </div>
+          
+          <td>
+              <input type="checkbox"  [checked]="note.isSelected" (change)="(note)" (change)="toggleSelection(note)"class="select-checkbox">
+          </td>
+          <td>{{ note.titre }}</td>
+          <td>{{ note.code }}</td>
+          <td>{{ note.description }}</td>
+          <td>{{ note.date | date:'yyyy/MM/dd' }}</td>
+          <td><iframe [src]="note.safeUrl" width="600px" height="200"></iframe>
+            <a href="http://127.0.0.1:8000{{ note.file }}" target="_blank">{{ note.file || 'N/A' }}</a>
+            </td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+

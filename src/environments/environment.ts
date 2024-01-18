@@ -5,9 +5,9 @@
 export const environment = {
     production: false,
     baseUrlAuth: 'https://reporting.bcm.mr/authenticate',
-    baseUrlAccountService: 'http://localhost:8075',
-    baseUrl: 'http://localhost:8075',
-    cliUrl: 'http://localhost:8075',
+    baseUrlAccountService: 'http://localhost:8081',
+    baseUrl: 'http://localhost:8081',
+    cliUrl: 'http://localhost:8081',
   
   };
   

@@ -23,6 +23,10 @@ import { BalanceGeneralMensuelComponent } from './balance-general-mensuel/balanc
 import { BalanceDetailleAnnuelComponent } from './balance-detaille-annuel/balance-detaille-annuel.component';
 import { BalanceDetailleMensuelComponent } from './balance-detaille-mensuel/balance-detaille-mensuel.component';
 import { FluxSortantComponent } from './flux-sortant/flux-sortant.component';
+import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -35,6 +39,7 @@ import { FluxSortantComponent } from './flux-sortant/flux-sortant.component';
     BalanceDetailleAnnuelComponent,
     BalanceDetailleMensuelComponent,
     FluxSortantComponent,
+    UpdateDialogComponent,
 
   ],
   imports: [
@@ -48,6 +53,9 @@ import { FluxSortantComponent } from './flux-sortant/flux-sortant.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatDialogModule
   ],
   providers: [
     AuthGuard,
