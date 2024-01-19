@@ -1,101 +1,82 @@
-import {Component, OnInit} from '@angular/core';
-import {BalancedetailleModel} from "../core/model/balancedetaille.model";
-
-import {ActivatedRoute} from "@angular/router";
-import * as XLSX from "xlsx";
-import { ColumnMode, NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { BalancedetailleService } from '../service/balancedetaille.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, Inject, LOCALE_ID, ViewChild } from '@angular/core';
+import { environment } from 'src/environments/environment.prod';
+import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { BalanceGeneralService } from '../services/reporting-bcm/balance-general.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-balance-detaille-annuel',
   templateUrl: './balance-detaille-annuel.component.html',
-  styleUrls: ['./balance-detaille-annuel.component.scss']
+  styleUrls: ['./balance-detaille-annuel.component.css']
 })
-export class BalanceDetailleAnnuelComponent implements OnInit {
+export class BalanceDetailleAnnuelComponent {
+  balances: any[] = [];
 
-  balancedetailleModels: BalancedetailleModel[] = [];
-  perttemp: BalancedetailleModel[] = [];
-  loadingIndicator = true;
-  totalSdeBD = 0;
-  ColumnMode = ColumnMode;
-  rows: BalancedetailleModel[] = [];
-  temp: BalancedetailleModel[] = [];
-  loading: boolean = false;
 
-  constructor(private balancedetailleService: BalancedetailleService,
-              private route: ActivatedRoute) {
-  }
+  dataSource = new MatTableDataSource<any>();
+  searchTerm: string = '';
+  balanceList: any [] = [
+    {
+      isSelected:false
+    }
+  ]
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  constructor(private balanceService: BalanceGeneralService,@Inject(LOCALE_ID) private locale: string,public dialog: MatDialog, private router: Router,private http: HttpClient) { }
+
 
   ngOnInit(): void {
-    this.getBalanceDetaillesAnnuel();
+    this.balanceService.getAllBalancedetaille().subscribe((data:any[])=>{
+      this.balanceList = data;
+      this.dataSource.data = this.balanceList;
+    });
+  
   }
 
-  getBalanceDetaillesAnnuel() {
-    this.loading = true;
-    this.balancedetailleService.getAllBalancedetailleAnnuel().subscribe(
-      data => {
-        this.balancedetailleModels = data;
-        this.rows = data;
-        this.perttemp = data;
-        if (this.perttemp) this.perttemp?.forEach(value => {
-          this.totalSdeBD += value.soldeMru;
-        })
-        this.loading = false;
+  // -------
+  openUpdateDialog(noteId: number) {
+    const dialogRef = this.dialog.open(UpdateDialogComponent, {
+      data: { noteId: noteId },
+      width: '1200px',
+      panelClass: 'custom-dialog-container',
+      position: {
+        left: '227px', // Ajoutez la valeur de padding-left que vous souhaitez
+      },
+      disableClose: true
+    });
+  
+    dialogRef.afterClosed().subscribe((formData: FormData) => {
+      if (formData) {
+        this.updateDocument(noteId, formData);
       }
-    )
+    });
   }
-
-  updateFilter(event: any) {
-
-    const val = event.target.value.toLowerCase();
-    if (val) {
-      this.temp = this.rows;
-      // filter our data
-      const temp = this.temp.filter(function (d) {
-        return (d.compte.toLowerCase().indexOf(val) !== -1 || d.devise.toLowerCase().indexOf(val) !== -1 || d.intituleCompteComptable.toLowerCase().indexOf(val) !== -1 || d.compteBancaireClient.toLowerCase().indexOf(val) !== -1 ||
-          d.intituleCompteBancaire.toLowerCase().indexOf(val) !== -1 || !val);
-      });
-      this.rows = temp;
-    } else {
-      this.rows = this.perttemp;
-    }
-  }
-
-  exportexcel(): void {
-
-    /*const  data =this.rows.map(value => {
-      return value.superieurFullname
-    })*/
-    const data = this.rows.map(value => {
-        return {
-          dateClotureBalance: value.dateClotureBalance,
-          compte: value.compte,
-          intituleCompteComptable: value.intituleCompteComptable,
-          compteBancaireClient: value.compteBancaireClient,
-          age: value.age,
-          intituleCompteBancaire: value.intituleCompteBancaire,
-          estClientApparente: value.estClientApparente,
-          resident: value.resident,
-          devise: value.devise,
-          activiteClient: value.activiteClient,
-          secteurActiviteClient: value.secteurActiviteClient,
-          soldeDebiteur: value.soldeDebiteur,
-          soldeCrediteur: value.soldeCrediteur,
-          soldeMru: value.soldeMru
-        }
+  updateDocument(id: number, formData: FormData): void {
+    const headers = new HttpHeaders({
+      'Authorization': `JWT ${localStorage.getItem('access')}`,
+    });
+  
+    this.http.put(`${environment.baseUrl}update-document/${id}`, formData, { headers }).subscribe(
+      (response: any) => {
+        // Gérer la réponse de l'API ici
+        console.log('Update success:', response);
+        window.location.reload();
+      },
+      (error: any) => {
+        // Gérer les erreurs ici
+        console.error('Erreur lors de la mise à jour du document :', error);
       }
     );
-
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-
-    /* generate workbook and add the worksheet */
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-
-    /* save to file */
-    XLSX.writeFile(wb, 'BalanceDetaille.xlsx');
-
   }
-
-
+  applyFilter() {
+    // Apply the filter directly to the MatTableDataSource
+    this.dataSource.filter = this.searchTerm.trim().toLowerCase();
+  }
+ 
+  toggleSelection(balance: any) {
+    balance.isSelected = !balance.isSelected;
+  }
 }
