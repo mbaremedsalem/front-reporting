@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, Inject, LOCALE_ID, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-balance',
   templateUrl: './balance-general-annuel.component.html',
@@ -15,34 +16,23 @@ import { Router } from '@angular/router';
 })
 export class BalanceGeneralAnnuelComponent {
   balances: any[] = [];
-  useTraditionalTable = false;
-
-  displayedColumns: string[] = ['sujet', 'code', 'description', 'file', 'direction_nom','date_ajout','actions'];
-
-  // Define the MatTableDataSource for the Material table
   dataSource = new MatTableDataSource<any>();
   searchTerm: string = '';
-  filteredDocuments: any[] = [];
+  balanceList: any [] = [
+    {
+      isSelected:false
+    }
+  ]
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  constructor(private balanceService: BalanceGeneralService,public dialog: MatDialog, private router: Router,private http: HttpClient) { }
+  constructor(private balanceService: BalanceGeneralService,@Inject(LOCALE_ID) private locale: string,public dialog: MatDialog, private router: Router,private http: HttpClient) { }
 
-  // onPageChange(event: PageEvent): void {
-  //   const page = event.pageIndex + 1;
-  //   const pageSize = event.pageSize;
-  
-  //   this.balanceService.getBalanceAnnuel(page, pageSize).subscribe((data: any[]) => {
-  //     this.notes = data;
-  //     this.dataSource.data = this.notes;
 
-  //   });
-  // }
   ngOnInit(): void {
-
-  
-    this.balanceService.getBalanceAnnuel().subscribe((data: any[]) => {
-      this.balances = data;
-      this.dataSource.data = this.balances; // Set the data for the Material table
+    this.balanceService.getAllBalancedetaille().subscribe((data:any[])=>{
+      this.balanceList = data;
+      this.dataSource.data = this.balanceList;
     });
+  
   }
 
   // -------
@@ -85,7 +75,7 @@ export class BalanceGeneralAnnuelComponent {
     this.dataSource.filter = this.searchTerm.trim().toLowerCase();
   }
  
-  toggleSelection(avis: any) {
-    avis.isSelected = !avis.isSelected;
+  toggleSelection(balance: any) {
+    balance.isSelected = !balance.isSelected;
   }
 }

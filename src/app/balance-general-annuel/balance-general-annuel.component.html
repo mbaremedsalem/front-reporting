@@ -14,42 +14,55 @@
   <thead>
       <tr>
           <th></th>
-          <th>compte</th>
-          <th>intituleCompteComptable</th>
-          <th>compteBancaireClient</th>
-          <th>intituleCompteBancaire</th>
-          <th>resident</th>
+          <th>beneficiaire</th>
           <th>devise</th>
-          <th>activiteClient</th>
-          <th>secteurActiviteClient</th>
-          <th>soldeDebiteur</th>
-          <th>soldeCrediteur</th>
+          <th>modeReglement</th>
+          <th>dateTransaction</th>
+          <th>montantTransaction</th>
+          <th>nifNni</th>
+          <th>nomDonneurOrdre</th>
+          <th>pays</th>
+          <th>produit</th>
+          <th>referenceTransaction</th>
+          <th>sourceDevise</th>
+          <th>typeSwift</th>
+          <th>tauxChange</th>
+          <th>banque</th>
+          <th>natureeconomique</th>
+          <th>natureeconomique</th>
+          
+
 
       </tr>
   </thead>
   <tbody>
-      <tr *ngFor="let note of dataSource.filteredData">
+      <tr *ngFor="let balance of dataSource.filteredData">
           
-              <div class="actions" *ngIf="note.isSelected">
-                <!-- <button mat-icon-button class="example-icon-up" (click)="openConfirmationDialog(note.id)">
-                <span><img src="assets/icons/delete.png" width="20px" height="20px" alt="Supprimer"></span>
-              </button> -->
-
-              <button mat-icon-button class="example-icon-up" (click)="openUpdateDialog(note.id)">
+              <div class="actions" *ngIf="balance.isSelected">
+              <button mat-icon-button class="example-icon-up" >
               <span><img src="assets/icons/edit.png" class="mat-iconleft" width="22px" height="24px" alt=""></span>
               </button>
             </div>
           
           <td>
-              <input type="checkbox"  [checked]="note.isSelected" (change)="(note)" (change)="toggleSelection(note)"class="select-checkbox">
+              <input type="checkbox"  [checked]="balance.isSelected" (change)="(balance)" (change)="toggleSelection(balance)"class="select-checkbox">
           </td>
-          <td>{{ note.titre }}</td>
-          <td>{{ note.code }}</td>
-          <td>{{ note.description }}</td>
-          <td>{{ note.date | date:'yyyy/MM/dd' }}</td>
-          <td><iframe [src]="note.safeUrl" width="600px" height="200"></iframe>
-            <a href="http://127.0.0.1:8000{{ note.file }}" target="_blank">{{ note.file || 'N/A' }}</a>
-            </td>
+          <td>{{ balance.beneficiaire }}</td>
+          <td>{{ balance.devise }}</td>
+          <td>{{ balance.modeReglement }}</td>
+          <td>{{ balance.dateTransaction | date:'yyyy/MM/dd' }}</td>
+          <td>{{ balance.montantTransaction }}</td>
+          <td>{{ balance.nifNni }}</td>
+          <td>{{ balance.nomDonneurOrdre }}</td>
+          <td>{{ balance.pays }}</td>
+          <td>{{ balance.produit }}</td>
+          <td>{{ balance.referenceTransaction }}</td>
+          <td>{{ balance.sourceDevise }}</td>
+          <td>{{ balance.typeSwift }}</td>
+          <td>{{ balance.tauxChange }}</td>
+          <td>{{ balance.banque }}</td>
+          <td>{{ balance.natureeconomique }}</td>
+          <td>{{ balance.natureeconomique }}</td>
       </tr>
   </tbody>
 </table>
