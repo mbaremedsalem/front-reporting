@@ -7,7 +7,7 @@ import { BalanceGeneralService } from '../services/reporting-bcm/balance-general
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-balance',
@@ -23,6 +23,8 @@ export class BalanceGeneralAnnuelComponent {
       isSelected:false
     }
   ]
+  importedData: any[] = [];
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(private balanceService: BalanceGeneralService,@Inject(LOCALE_ID) private locale: string,public dialog: MatDialog, private router: Router,private http: HttpClient) { }
 
@@ -78,4 +80,30 @@ export class BalanceGeneralAnnuelComponent {
   toggleSelection(balance: any) {
     balance.isSelected = !balance.isSelected;
   }
+
+    onFileSelected(event: any): void {
+      const file = event.target.files[0];
+      if (file) {
+        this.readExcel(file);
+      }
+    }
+  
+    readExcel(file: File): void {
+      const reader: FileReader = new FileReader();
+  
+      reader.onload = (e: any) => {
+        const data = e.target.result;
+        const workbook: XLSX.WorkBook = XLSX.read(data, { type: 'binary' });
+        const sheetName = workbook.SheetNames[0];
+        const excelData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+        this.importedData = excelData;
+      };
+  
+      reader.readAsBinaryString(file);
+    }
+  
+    importExcel(): void {
+     
+      console.log(this.importedData);
+    }
 }
