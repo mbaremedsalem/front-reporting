@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BalanceGeneralAnnuelComponent } from './balance-general-annuel/balance-general-annuel.component';
 import { FluxEntrantComponent } from './flux-entrant/flux-entrant.component';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -27,6 +27,8 @@ import { UpdateDialogComponent } from './update-dialog/update-dialog.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     BalanceDetailleMensuelComponent,
     FluxSortantComponent,
     UpdateDialogComponent,
+    UpdatePasswordComponent,
 
   ],
   imports: [
@@ -55,7 +58,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     HttpClientModule,
     MatPaginatorModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     AuthGuard,

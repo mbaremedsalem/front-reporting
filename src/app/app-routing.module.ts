@@ -8,10 +8,12 @@ import { BalanceGeneralMensuelComponent } from './balance-general-mensuel/balanc
 import { BalanceDetailleAnnuelComponent } from './balance-detaille-annuel/balance-detaille-annuel.component';
 import { BalanceDetailleMensuelComponent } from './balance-detaille-mensuel/balance-detaille-mensuel.component';
 import { FluxSortantComponent } from './flux-sortant/flux-sortant.component';
+import { UpdatePasswordComponent } from './update-password/update-password.component';
 
 const routes: Routes = [
   
   { path: '', component: LoginComponent },
+  { path: 'change-password', component: UpdatePasswordComponent },
 
   
   {
@@ -24,7 +26,6 @@ const routes: Routes = [
       { path: 'balance-detaille-manuel', component: BalanceDetailleMensuelComponent },
       { path: 'flux-entrant', component: FluxEntrantComponent },
       { path: 'flux-sortant', component: FluxSortantComponent },
-
       // { path: 'direction-admin', component: DirectionComponent },
       // { path: 'chart-banque-admin', component: DocumentAdminComponent },
       // { path: 'note-admin', component: NoteComponent },

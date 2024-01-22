@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment.prod';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import { User } from 'src/app/model/user.model';
 import { TokenModel } from 'src/app/model/token.model';
 import * as moment from "moment";
+import { environment } from 'src/environments/environment';
+import { Message } from 'src/app/model/message.model';
 
 
 const API_AUTH_URL = environment.baseUrlAuth + '/login';
+const apiUrl = `${environment.mybaseurl}login/`;
+const updatePasse = `${environment.mybaseurl}password/`;
 @Injectable({
   providedIn: 'root'
 })
@@ -22,32 +25,21 @@ export class AuthService {
   }
 
 
-  // Authentication/Authorization
-  login(username: string, password: string) {
-    this.logout();
-    return this.http.post<{ token: string }>(API_AUTH_URL, {username, password})
-      .pipe(
-        map(authenticateUser => {
-          const token: TokenModel = this.decode(authenticateUser.token);
+  login(credentials: any): Observable<User> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    
+    return this.http.post<User>(apiUrl, credentials, httpOptions);
+    
+  }
 
-
-          console.log(token.exp);
-          let user = new User();
-          user.username = token.sub;
-          user.email = token.email;
-          user.fullname = token.fullname;
-          user.id = token.id;
-          user.appRoles = token.roles;
-          localStorage.setItem('token', authenticateUser.token);
-          localStorage.setItem('expire_at', JSON.stringify(token.exp))
-          localStorage.setItem('currentUser', JSON.stringify(user));
-
-          this.currentUserSubject.next(user);
-
-          return user;
-
-        }));
-
+  changePassword(credentials: any): Observable<Message> {
+   
+    // const headers = new HttpHeaders().set('Authorization', 'JWT '+localStorage.getItem('access'));
+    return this.http.put<Message>(updatePasse, credentials);
   }
 
   logout() {
@@ -57,7 +49,6 @@ export class AuthService {
     this.currentUserSubject.next(null);
 
   }
-
 
 
   getExpiration() {

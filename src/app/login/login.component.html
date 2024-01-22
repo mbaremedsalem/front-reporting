@@ -21,6 +21,7 @@
                   <input type="text"
                          class="form-control"
                          id="username"
+                         [(ngModel)]="credentials.username"
                          formControlName="username"
                          placeholder="login">
                 </div>
@@ -28,13 +29,20 @@
                   <label for="password" class="form-label">Mot de passe</label>
                   <input type="password"
                          class="form-control"
+                         [(ngModel)]="credentials.password"
                          formControlName="password"
                          id="password">
                 </div>
-  
                 <div>
-                  <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0">
-                          Connexion
+                  <a [routerLink]="['/change-password']" class="txt1">
+                    Forgot Password?
+                  </a>
+                </div>
+                <div>
+                  <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0" [disabled]="loginInProgress">
+                          
+                          <span *ngIf="!loginInProgress">Connexion</span>
+                            <mat-progress-spinner *ngIf="loginInProgress" mode="indeterminate" style="width: 20px; height: 20px; margin: auto;"></mat-progress-spinner>
                   </button>
                 </div>
               </form>
