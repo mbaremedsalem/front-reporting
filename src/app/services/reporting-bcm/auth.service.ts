@@ -36,6 +36,15 @@ export class AuthService {
     
   }
 
+
+  loginbcm(credentialbcm: any): Observable<TokenModel> {
+
+    
+    return this.http.post<TokenModel>(API_AUTH_URL, credentialbcm,);
+    
+  }
+
+
   changePassword(credentials: any): Observable<Message> {
    
     // const headers = new HttpHeaders().set('Authorization', 'JWT '+localStorage.getItem('access'));

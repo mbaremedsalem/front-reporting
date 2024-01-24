@@ -4,6 +4,7 @@ import { AuthService } from '../services/reporting-bcm/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../model/user.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TokenModel } from '../model/token.model';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
   token: string | null | undefined;
   errorMessage: string | undefined;
   showErrorMessage: boolean = false;
-
+  credentialbcm = { banque: 'AUB', password: 'ba@#1!8?-34b' };
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
@@ -55,7 +56,11 @@ export class LoginComponent implements OnInit {
      ]
    });
  }
- 
+
+ submit() {
+  this.login();
+  this.loginReporting();
+}
  login() {
   this.loginInProgress = true; 
   this.auth.login(this.credentials).subscribe(
@@ -95,9 +100,20 @@ export class LoginComponent implements OnInit {
   });
 }
 
-  submit() {
-    this.login();
-  }
+loginReporting() {
+ 
+  this.auth.loginbcm(this.credentialbcm).subscribe(
+    (response: TokenModel) => {
+      if (response.tokenbcm !=="") {
+        // Store the access token in local storage or a cookie
+          localStorage.setItem('tokenreporting', response.tokenbcm);
+      }
+      
+    },
+  );
+}
+
+
   showErrorAlert(message: string) {
     this.errorMessage = message;
     this._snackBar.open(message, 'Fermer', {

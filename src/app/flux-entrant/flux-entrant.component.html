@@ -1,1 +1,61 @@
-<p>flux works!</p>
+<div class="flex-container">
+    <div class="search-bar">
+      <input type="text" placeholder="Rechercher" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()"/>
+    </div>
+    <div class="page-content" style="padding-left: 0px; padding-bottom: 10px;">
+      <button style="color: white; background-color: #314905; border-radius: 10px; width: 200px; height: 50px;" mat-raised-button class="example-icon" (click)="envoyeFluxSortant()">
+        <img src="assets/icons/export.png" class="mat-iconleft" width="20px" height="20px" alt="">
+  
+      </button>
+    </div>
+  </div>
+  
+  <table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>banque</th>
+          <th>referencetransaction</th>
+          <th>datetransaction</th>
+          <th>typeswfit</th>
+          <th>modereglement</th>
+          <th>devise</th>
+          <th>montanttransaction</th>
+          <th>tauxdechange</th>
+          <th>nomdonneurordre</th>
+          <th>nifNni</th>
+          <th>beneficiaire</th>
+          <th>produit</th>
+          <th>natureeconomique</th>
+          <th>pays</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let flux of dataSource.filteredData">
+  
+              <div class="actions" *ngIf="flux.isSelected">
+              <button mat-icon-button class="example-icon-up" >
+              <span><img src="assets/icons/edit.png" class="mat-iconleft" width="22px" height="24px" alt=""></span>
+              </button>
+            </div>
+  
+          <td>
+              <input type="checkbox"  [checked]="flux.isSelected" (change)="(flux)" (change)="toggleSelection(flux)"class="select-checkbox">
+          </td>
+          <td>{{ flux.banque }}</td>
+          <td>{{ flux.referencetransaction }}</td>
+          <td>{{ flux.datetransaction }}</td>
+          <td>{{ flux.typeswfit }}</td>
+          <td>{{ flux.modereglement }}</td>
+          <td>{{ flux.devise }}</td>
+          <td>{{ flux.montanttransaction }}</td>
+          <td>{{ flux.tauxdechange }}</td>
+          <td>{{ flux.nomdonneurordre }}</td>
+          <td>{{ flux.nifNni }}</td>
+          <td>{{ flux.beneficiaire }}</td>
+          <td>{{ flux.produit }}</td>
+          <td>{{ flux.natureeconomique }}</td>
+          <td>{{ flux.pays }}</td>
+      </tr>
+  </tbody>
+  </table>

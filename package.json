@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -22,6 +22,7 @@
     "@angular/router": "^16.1.0",
     "@swimlane/ngx-datatable": "^20.1.0",
     "@types/feather-icons": "^4.29.4",
+    "cors": "^2.8.5",
     "feather-icons": "^4.29.1",
     "highlight.js": "^11.9.0",
     "moment": "^2.30.1",
