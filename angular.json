@@ -72,7 +72,8 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "front-reporting:build"
+            "browserTarget": "front-reporting:build",
+            "proxyConfig": "src/proxy.conf.json"
           }
         },
         "test": {

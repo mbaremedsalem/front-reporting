@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 import { Message } from 'src/app/model/message.model';
 
 
-const API_AUTH_URL = environment.baseUrlAuth + '/login';
+const API_AUTH_URL = environment.baseUrlAuth + 'authenticate/login';
 const apiUrl = `${environment.mybaseurl}login/`;
 const updatePasse = `${environment.mybaseurl}password/`;
 @Injectable({
@@ -38,7 +38,11 @@ export class AuthService {
 
 
   loginbcm(credentialbcm: any): Observable<TokenModel> {
-
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
     
     return this.http.post<TokenModel>(API_AUTH_URL, credentialbcm,);
     

@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    baseUrlAuth: 'https://reporting.bcm.mr/authenticate',
+    baseUrlAuth: 'https://reporting.bcm.mr/',
     baseUrlReporting: 'https://reporting.bcm.mr/',
     baseUrl: 'http://localhost:8081/api/',
     cliUrl: 'http://localhost:8081',
