@@ -1,1 +1,72 @@
-<p>flux-sortant works!</p>
+<div class="flex-container">
+    <div class="search-bar">
+      <input type="text" placeholder="Rechercher" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()"/>
+    </div>
+    <div class="page-content" style="padding-left: 0px; padding-bottom: 10px;">
+        <button style="color: white; background-color: #314905; border-radius: 10px; width: 200px; height: 50px;"
+            mat-raised-button class="example-icon" (click)="envoyeFluxSortant()">
+            <img src="assets/icons/export.png" class="mat-iconleft" width="20px" height="20px" alt="">
+        </button>
+        <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
+        <div class="position-fixed top-50 start-50 translate-middle" style="z-index: 9999" *ngIf="responseMessage">
+            <ng-container *ngIf="showErrorMessage">
+                <div class="success-message"></div>
+              </ng-container>
+        </div>
+    </div>
+  </div>
+  
+  <table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>BENEFICIAIRE</th>
+          <th>DATE_TRANSACTION</th>
+          <th>DEVISE</th>
+          <th>MODE_REGLEMENT</th>
+          <th>MONTANT_TRANSACTION</th>
+          <th>NIF_NNI</th>
+          <th>NOM_DONNEUR_ORDRE</th>
+          <th>PAYS</th>
+          <th>PRODUIT</th>
+          <th>REFERENCE_TRANSACTION</th>
+          <th>SOURCE_DEVISE</th>
+          <th>TAUX_CHANGE</th>
+          <th>TYPE_SWIFT</th>
+          <th>BANQUE</th>
+          <th>NATUREECONOMIQUE</th>
+
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let flux of dataSource.filteredData">
+  
+              <div class="actions" *ngIf="flux.isSelected">
+              <button mat-icon-button class="example-icon-up" >
+              <span><img src="assets/icons/edit.png" class="mat-iconleft" width="22px" height="24px" alt=""></span>
+              </button>
+            </div>
+  
+          <td>
+              <input type="checkbox"  [checked]="flux.isSelected" (change)="(flux)" (change)="toggleSelection(flux)"class="select-checkbox">
+          </td>
+
+          <td>{{ flux.BENEFICIAIRE }}</td>
+          <td>{{ flux.DATE_TRANSACTION }}</td>
+          <td>{{ flux.DEVISE }}</td>
+          <td>{{ flux.MODE_REGLEMENT }}</td>
+          <td>{{ flux.MONTANT_TRANSACTION }}</td>
+          <td>{{ flux.NIF_NNI }}</td>
+          <td>{{ flux.NOM_DONNEUR_ORDRE }}</td>
+          <td>{{ flux.PAYS }}</td>
+          <td>{{ flux.PRODUIT }}</td>
+          <td>{{ flux.REFERENCE_TRANSACTION }}</td>
+          <td>{{ flux.SOURCE_DEVISE }}</td>
+          <td>{{ flux.TAUX_CHANGE }}</td>
+          <td>{{ flux.TYPE_SWIFT }}</td>
+          <td>{{ flux.BANQUE }}</td>
+          <td>{{ flux.NATUREECONOMIQUE }}</td>
+
+      </tr>
+  </tbody>
+  </table>

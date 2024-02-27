@@ -15,14 +15,13 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup ;
   loading = false;
   returnUrl!: string ;
-  submitted = false;
+ 
   loginInProgress = false;
   credentials = { username: '', password: '' };
   message: string | undefined;
-  token: string | null | undefined;
+  access: string | null | undefined;
   errorMessage: string | undefined;
   showErrorMessage: boolean = false;
-  credentialbcm = { banque: 'AUB', password: 'ba@#1!8?-34b' };
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
@@ -36,9 +35,7 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
   
-  //  Form initalization
-  //  Default params, validators
-  
+
 
  initLoginForm() {
    this.loginForm = this.fb.group({
@@ -59,29 +56,34 @@ export class LoginComponent implements OnInit {
 
  submit() {
   this.login();
-  this.loginReporting();
+
 }
  login() {
   this.loginInProgress = true; 
   this.auth.login(this.credentials).subscribe(
     (response: User) => {
       if (response.status === 200) {
+        if (response.role === "Caissier") {
         // Login success
         this.message = response.message;
         // Store the access token in local storage or a cookie
           localStorage.setItem('username', response.username);   
           localStorage.setItem('access', response.access);  
+          localStorage.setItem('token', response.token);  
           localStorage.setItem('id', response.id.toString());   
           localStorage.setItem('access', response.access);
           localStorage.setItem('nom', response.firstname);
           localStorage.setItem('prenom', response.lastname);
           localStorage.setItem('email', response.email);
+          localStorage.setItem('phone', response.phone);
           localStorage.setItem('image', response.image);
           localStorage.setItem('post', response.post);
-          this.token = localStorage.getItem('access');
+          this.access = localStorage.getItem('access');
+
           // Redirect to the home page
-          this.router.navigate(['/acueil']);
+          this.router.navigate(['/acueil/profile']);
       }
+    }
       else
       {
         this.message = response.message;
@@ -100,18 +102,6 @@ export class LoginComponent implements OnInit {
   });
 }
 
-loginReporting() {
- 
-  this.auth.loginbcm(this.credentialbcm).subscribe(
-    (response: TokenModel) => {
-      if (response.tokenbcm !=="") {
-        // Store the access token in local storage or a cookie
-          localStorage.setItem('tokenreporting', response.tokenbcm);
-      }
-      
-    },
-  );
-}
 
 
   showErrorAlert(message: string) {

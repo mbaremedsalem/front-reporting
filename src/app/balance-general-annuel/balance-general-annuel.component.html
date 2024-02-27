@@ -1,76 +1,58 @@
 <div class="flex-container">
-    <div class="search-bar">
-      <input type="text" placeholder="Rechercher" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()"/>
-    </div>
-    <div class="page-content" style="padding-left: 0px; padding-bottom: 10px;">
-      <input type="file" (change)="onFileSelected($event)" accept=".xlsx" />
-      <button
-        style="color: white; background-color: #314905; border-radius: 10px; width: 200px; height: 50px;"
-        mat-raised-button
-        class="example-icon"
-        (click)="importExcel()"
-      >
-        <img src="assets/icons/export.png" class="mat-iconleft" width="20px" height="20px" alt="" />
-      </button>
-    </div>
+  <div class="search-bar">
+    <input type="text" placeholder="Rechercher" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()"/>
   </div>
-  
+  <div class="page-content" style="padding-left: 0px; padding-bottom: 10px;">
+    <button style="color: white; background-color: #314905; border-radius: 10px; width: 200px; height: 50px;" mat-raised-button class="example-icon" >
+      <img src="assets/icons/export.png" class="mat-iconleft" width="20px" height="20px" alt="">
+
+    </button>
+  </div>
+</div>
+
 <table>
-  <thead>
-      <tr>
-          <th></th>
-          <th>beneficiaire</th>
-          <th>devise</th>
-          <th>modeReglement</th>
-          <th>dateTransaction</th>
-          <th>montantTransaction</th>
-          <th>nifNni</th>
-          <th>nomDonneurOrdre</th>
-          <th>pays</th>
-          <th>produit</th>
-          <th>referenceTransaction</th>
-          <th>sourceDevise</th>
-          <th>typeSwift</th>
-          <th>tauxChange</th>
-          <th>banque</th>
-          <th>natureeconomique</th>
-          <th>natureeconomique</th>
-          
+<thead>
+    <tr>
+        <th></th>
+        <th>NCG</th>
+        <th>DEVISE</th>
+        <th>CPTNB</th>
+        <th>CPTNBDB</th>
+        <th>CPTNBCR</th>
+        <th>SLDDEVDB</th>
+        <th>SLDDEVCR</th>
+        <th>CPTMDEVDB</th>
+        <th>CPTMDEVCR</th>
 
 
-      </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let balance of importedData">
-      <div class="actions" *ngIf="balance.isSelected">
-        <button mat-icon-button class="example-icon-up">
-          <span><img src="assets/icons/edit.png" class="mat-iconleft" width="22px" height="24px" alt=""></span>
-        </button>
-      </div>
-  
-      <td>
-        <input type="checkbox" [checked]="balance.isSelected" (change)="toggleSelection(balance)" class="select-checkbox">
-      </td>
-      <td>{{ balance.beneficiaire }}</td>
-      <td>{{ balance.devise }}</td>
-      <td>{{ balance.modeReglement }}</td>
-      <td>{{ balance.dateTransaction | date:'yyyy/MM/dd' }}</td>
-      <td>{{ balance.montantTransaction }}</td>
-      <td>{{ balance.nifNni }}</td>
-      <td>{{ balance.nomDonneurOrdre }}</td>
-      <td>{{ balance.pays }}</td>
-      <td>{{ balance.produit }}</td>
-      <td>{{ balance.referenceTransaction }}</td>
-      <td>{{ balance.sourceDevise }}</td>
-      <td>{{ balance.typeSwift }}</td>
-      <td>{{ balance.tauxChange }}</td>
-      <td>{{ balance.banque }}</td>
-      <td>{{ balance.natureeconomique }}</td>
-      <td>{{ balance.natureeconomique }}</td>
+
     </tr>
-  </tbody>
+</thead>
+<tbody>
+    <tr *ngFor="let balance of dataSource.filteredData">
+
+            <div class="actions" *ngIf="balance.isSelected">
+            <button mat-icon-button class="example-icon-up" >
+            <span><img src="assets/icons/edit.png" class="mat-iconleft" width="22px" height="24px" alt=""></span>
+            </button>
+          </div>
+
+        <td>
+            <input type="checkbox"  [checked]="balance.isSelected" (change)="(balance)" (change)="toggleSelection(balance)"class="select-checkbox">
+        </td>
+
+        <td>{{ balance.NCG }}</td>
+        <td>{{ balance.DEVISE }}</td>
+        <td>{{ balance.CPTNB }}</td>
+        <td>{{ balance.CPTNBDB }}</td>
+        <td>{{ balance.CPTNBCR }}</td>
+        <td>{{ balance.SLDDEVDB }}</td>
+        <td>{{ balance.SLDDEVCR }}</td>
+        <td>{{ balance.CPTMDEVDB }}</td>
+        <td>{{ balance.CPTMDEVCR }}</td>
+   
+    </tr>
+</tbody>
 </table>
-
-
 
 

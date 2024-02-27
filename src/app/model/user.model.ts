@@ -7,10 +7,11 @@ export class User {
     post!: string;
     firstname!: string;
     lastname!: string;
+    role!:string;
     phone!:string;
     image!:string;
     message!:string;
+    token!:string
     access!:string;
     refresh_token!:string;
   }
-

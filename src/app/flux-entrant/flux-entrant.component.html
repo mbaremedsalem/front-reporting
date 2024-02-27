@@ -3,31 +3,37 @@
       <input type="text" placeholder="Rechercher" class="search-input" [(ngModel)]="searchTerm" (input)="applyFilter()"/>
     </div>
     <div class="page-content" style="padding-left: 0px; padding-bottom: 10px;">
-      <button style="color: white; background-color: #314905; border-radius: 10px; width: 200px; height: 50px;" mat-raised-button class="example-icon" (click)="envoyeFluxSortant()">
-        <img src="assets/icons/export.png" class="mat-iconleft" width="20px" height="20px" alt="">
-  
+      <button style="color: white; background-color: #314905; border-radius: 10px; width: 200px; height: 50px;"
+          mat-raised-button class="example-icon" (click)="envoyeFluxEntrantt()">
+          <img src="assets/icons/export.png" class="mat-iconleft" width="20px" height="20px" alt="">
       </button>
-    </div>
+      <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
+      <div class="position-fixed top-50 start-50 translate-middle" style="z-index: 9999" *ngIf="responseMessage">
+          <ng-container *ngIf="showErrorMessage">
+              <div class="success-message"></div>
+            </ng-container>
+      </div>
+  </div>
   </div>
   
   <table>
   <thead>
       <tr>
           <th></th>
-          <th>banque</th>
-          <th>referencetransaction</th>
-          <th>datetransaction</th>
-          <th>typeswfit</th>
-          <th>modereglement</th>
-          <th>devise</th>
-          <th>montanttransaction</th>
-          <th>tauxdechange</th>
-          <th>nomdonneurordre</th>
-          <th>nifNni</th>
-          <th>beneficiaire</th>
-          <th>produit</th>
-          <th>natureeconomique</th>
-          <th>pays</th>
+          <th>BANQUE</th>
+          <th>REFERENCETRANSACTION</th>
+          <th>DATETRANSACTION</th>
+          <th>TYPESWFIT</th>
+          <th>MODEREGLEMENT</th>
+          <th>DEVISE</th>
+          <th>MONTANTTRANSACTION</th>
+          <th>TAUXDECHANGE</th>
+          <th>NOMDONNEURORDRE</th>
+          <th>NIF_NNI</th>
+          <th>BENEFICIAIRE</th>
+          <th>PRODUIT</th>
+          <th>NATUREECONOMIQUE</th>
+          <th>PAYS</th>
       </tr>
   </thead>
   <tbody>
@@ -42,20 +48,20 @@
           <td>
               <input type="checkbox"  [checked]="flux.isSelected" (change)="(flux)" (change)="toggleSelection(flux)"class="select-checkbox">
           </td>
-          <td>{{ flux.banque }}</td>
-          <td>{{ flux.referencetransaction }}</td>
-          <td>{{ flux.datetransaction }}</td>
-          <td>{{ flux.typeswfit }}</td>
-          <td>{{ flux.modereglement }}</td>
-          <td>{{ flux.devise }}</td>
-          <td>{{ flux.montanttransaction }}</td>
-          <td>{{ flux.tauxdechange }}</td>
-          <td>{{ flux.nomdonneurordre }}</td>
-          <td>{{ flux.nifNni }}</td>
-          <td>{{ flux.beneficiaire }}</td>
-          <td>{{ flux.produit }}</td>
-          <td>{{ flux.natureeconomique }}</td>
-          <td>{{ flux.pays }}</td>
+          <td>{{ flux.BANQUE }}</td>
+          <td>{{ flux.REFERENCETRANSACTION }}</td>
+          <td>{{ flux.DATETRANSACTION }}</td>
+          <td>{{ flux.TYPESWFIT }}</td>
+          <td>{{ flux.MODEREGLEMENT }}</td>
+          <td>{{ flux.DEVISE }}</td>
+          <td>{{ flux.MONTANTTRANSACTION }}</td>
+          <td>{{ flux.TAUXDECHANGE }}</td>
+          <td>{{ flux.NOMDONNEURORDRE }}</td>
+          <td>{{ flux.NIF_NNI }}</td>
+          <td>{{ flux.BENEFICIAIRE }}</td>
+          <td>{{ flux.PRODUIT }}</td>
+          <td>{{ flux.NATUREECONOMIQUE }}</td>
+          <td>{{ flux.PAYS }}</td>
       </tr>
   </tbody>
   </table>

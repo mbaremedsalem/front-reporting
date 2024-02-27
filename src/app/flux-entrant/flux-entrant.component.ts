@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UpdateDialogComponent } from '../update-dialog/update-dialog.component';
 import { environment } from 'src/environments/environment.prod';
+import { SuccessModel } from '../core/model/success.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-flux',
@@ -14,18 +16,23 @@ import { environment } from 'src/environments/environment.prod';
   styleUrls: ['./flux-entrant.component.css']
 })
 export class FluxEntrantComponent {
-  flux_entrant: any[] = [];
+
 
 
   dataSource = new MatTableDataSource<any>();
   searchTerm: string = '';
   fluxentrantList: any [] = [
-    {
-      isSelected:false
-    }
-  ]
+
+  ] 
+  loading: boolean = false;
+  responseMessage: string = '';
+  errorMessage: string | undefined;
+  message: string | undefined;
+  showErrorMessage: boolean = false;
+  successMessage: string = '';
+  showSuccessMessage: boolean = false;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  constructor(private fluxEntrantService: FluxService,@Inject(LOCALE_ID) private locale: string,public dialog: MatDialog, private router: Router,private http: HttpClient) { }
+  constructor(private fluxEntrantService: FluxService,private _snackBar: MatSnackBar,@Inject(LOCALE_ID) private locale: string,public dialog: MatDialog, private router: Router,private http: HttpClient) { }
 
 
   ngOnInit(): void {
@@ -75,24 +82,81 @@ export class FluxEntrantComponent {
     // Apply the filter directly to the MatTableDataSource
     this.dataSource.filter = this.searchTerm.trim().toLowerCase();
   }
- 
+  envoyeFluxEntrantt() {
+    const selectedFlux = this.fluxentrantList.map(flux => ({
+      banque: flux.BANQUE,
+      referenceTransaction: flux.REFERENCETRANSACTION,
+      dateTransaction: flux.DATETRANSACTION,
+      typeSwfit: flux.TYPESWFIT,
+      modeReglement: flux.MODEREGLEMENT,
+      devise: flux.DEVISE,
+      montantTransaction: parseFloat(flux.MONTANTTRANSACTION), // Assurez-vous que le montant est converti en nombre
+      tauxDeChange: parseFloat(flux.TAUXDECHANGE), // Assurez-vous que le taux de change est converti en nombre
+      nomDonneurOrdre: flux.NOMDONNEURORDRE,
+      nifNni: flux.NIF_NNI,
+      beneficiaire: flux.BENEFICIAIRE,
+      produit: flux.PRODUIT,
+      natureEconomique: flux.NATUREECONOMIQUE,
+      pays: flux.PAYS
+    }));
+    
+    this.loading = true;
+
+    // Call the service to export data
+    this.fluxEntrantService.envoyeFluxEntrant(selectedFlux).subscribe(
+        (response: SuccessModel) => {
+            // Handle success
+            console.log('Export successful', response);
+            this.loading = false;
+            this.responseMessage = response.message;
+            console.log(selectedFlux);
+            this.message = response.message;
+            this.showErrorMessage = true;
+            if (this.message) {
+              this.showSuccessAlert(this.message);
+            }
+             
+        },
+        (error) => {
+            // Handle error
+            this.message = error.error.message;
+            this.showErrorMessage = true;
+            if (this.message) {
+              this.showErrorAlert(this.message);
+            }
+            console.error('Export failed', error);
+            this.loading = false;
+            this.responseMessage = error.error.message;
+        }
+    );
+}
+
+showErrorAlert(message: string) {
+  this.errorMessage = message;
+  this._snackBar.open(message, 'Fermer', {
+    duration: 6000, // Durée d'affichage de l'alerte (3 secondes)
+  });
+}
+
+  // Méthode pour afficher une alerte de succès
+  showSuccessAlert(message: string) {
+    this.successMessage = message;
+    this.showSuccessMessage = true;
+    this._snackBar.open(this.successMessage, 'Fermer', {
+      duration: 3000, // Durée d'affichage de l'alerte de succès (3 secondes)
+      panelClass: ['success-snackbar'] // Ajoutez une classe CSS pour styliser l'alerte de succès
+    });
+
+    // Réinitialiser les messages de succès après 3 secondes
+    setTimeout(() => {
+      this.successMessage = '';
+      this.showSuccessMessage = false;
+    }, )
+  } 
+
   toggleSelection(flux: any) {
     flux.isSelected = !flux.isSelected;
   }
 
-  envoyeFluxSortant() {
-    const selectedFlux = this.dataSource.filteredData.filter((flux) => flux.isSelected);
-    
-    // Call the service to export data
-    this.fluxEntrantService.envoyeFluxEntrant(selectedFlux).subscribe(
-      (response) => {
-        // Handle success, if needed
-        console.log('Export successful', response);
-      },
-      (error) => {
-        // Handle error
-        console.error('Export failed', error);
-      }
-    );
-  }
+
 }

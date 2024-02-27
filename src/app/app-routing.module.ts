@@ -9,6 +9,7 @@ import { BalanceDetailleAnnuelComponent } from './balance-detaille-annuel/balanc
 import { BalanceDetailleMensuelComponent } from './balance-detaille-mensuel/balance-detaille-mensuel.component';
 import { FluxSortantComponent } from './flux-sortant/flux-sortant.component';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   
@@ -20,6 +21,7 @@ const routes: Routes = [
     path: 'acueil', // Incluez "home" dans le chemin
     component: AcueilComponent,
     children: [
+      { path: 'profile', component: ProfileComponent },
       { path: 'balance-general-annuel', component: BalanceGeneralAnnuelComponent },
       { path: 'balance-general-mensuel', component: BalanceGeneralMensuelComponent },
       { path: 'balance-detaille-annuel', component: BalanceDetailleAnnuelComponent },

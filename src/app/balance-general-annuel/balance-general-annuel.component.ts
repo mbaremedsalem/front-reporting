@@ -30,7 +30,7 @@ export class BalanceGeneralAnnuelComponent {
 
 
   ngOnInit(): void {
-    this.balanceService.getAllBalancedetaille().subscribe((data:any[])=>{
+    this.balanceService.getAllBalangeneralle().subscribe((data:any[])=>{
       this.balanceList = data;
       this.dataSource.data = this.balanceList;
     });

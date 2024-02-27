@@ -14,24 +14,20 @@
 <thead>
     <tr>
         <th></th>
-        <th>beneficiaire</th>
-        <th>devise</th>
-        <th>modeReglement</th>
-        <th>dateTransaction</th>
-        <th>montantTransaction</th>
-        <th>nifNni</th>
-        <th>nomDonneurOrdre</th>
-        <th>pays</th>
-        <th>produit</th>
-        <th>referenceTransaction</th>
-        <th>sourceDevise</th>
-        <th>typeSwift</th>
-        <th>tauxChange</th>
-        <th>banque</th>
-        <th>natureeconomique</th>
-        <th>natureeconomique</th>
-
-
+        <th>BENEFICIAIRE</th>
+        <th>DATE_TRANSACTION</th>
+        <th>DEVISE</th>
+        <th>MODE_REGLEMENT</th>
+        <th>MONTANT_TRANSACTION</th>
+        <th>NOM_DONNEUR_ORDRE</th>
+        <th>PRODUIT</th>
+        <th>REFERENCE_TRANSACTION</th>
+        <th>SOURCE_DEVISE</th>
+        <th>TAUX_CHANGE</th>
+        <th>TYPE_SWIFT</th>
+        <th>BANQUE</th>
+        <th>NATUREECONOMIQUE</th>
+        <th>NATUREECONOMIQUE</th>
 
     </tr>
 </thead>
@@ -47,22 +43,21 @@
         <td>
             <input type="checkbox"  [checked]="balance.isSelected" (change)="(balance)" (change)="toggleSelection(balance)"class="select-checkbox">
         </td>
-        <td>{{ balance.beneficiaire }}</td>
-        <td>{{ balance.devise }}</td>
-        <td>{{ balance.modeReglement }}</td>
-        <td>{{ balance.dateTransaction | date:'yyyy/MM/dd' }}</td>
-        <td>{{ balance.montantTransaction }}</td>
-        <td>{{ balance.nifNni }}</td>
-        <td>{{ balance.nomDonneurOrdre }}</td>
-        <td>{{ balance.pays }}</td>
-        <td>{{ balance.produit }}</td>
-        <td>{{ balance.referenceTransaction }}</td>
-        <td>{{ balance.sourceDevise }}</td>
-        <td>{{ balance.typeSwift }}</td>
-        <td>{{ balance.tauxChange }}</td>
-        <td>{{ balance.banque }}</td>
-        <td>{{ balance.natureeconomique }}</td>
-        <td>{{ balance.natureeconomique }}</td>
+
+        <td>{{ balance.BENEFICIAIRE }}</td>
+        <td>{{ balance.DATE_TRANSACTION }}</td>
+        <td>{{ balance.DEVISE }}</td>
+        <td>{{ balance.MODE_REGLEMENT }}</td>
+        <td>{{ balance.MONTANT_TRANSACTION }}</td>
+        <td>{{ balance.NOM_DONNEUR_ORDRE }}</td>
+        <td>{{ balance.PRODUIT }}</td>
+        <td>{{ balance.REFERENCE_TRANSACTION }}</td>
+        <td>{{ balance.SOURCE_DEVISE }}</td>
+        <td>{{ balance.TAUX_CHANGE }}</td>
+        <td>{{ balance.TYPE_SWIFT }}</td>
+        <td>{{ balance.BANQUE }}</td>
+        <td>{{ balance.NATUREECONOMIQUE }}</td>
+        <td>{{ balance.NATURE_ECONOMIQUE }}</td>
     </tr>
 </tbody>
 </table>

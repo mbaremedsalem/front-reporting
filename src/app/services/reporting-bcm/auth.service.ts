@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpBackend, HttpRequest, HttpEvent, HttpXhrBackend, HttpHeaders } from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import { User } from 'src/app/model/user.model';
@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 import { Message } from 'src/app/model/message.model';
 
 
-const API_AUTH_URL = environment.baseUrlAuth + 'authenticate/login';
+
 const apiUrl = `${environment.mybaseurl}login/`;
 const updatePasse = `${environment.mybaseurl}password/`;
 @Injectable({
@@ -19,34 +19,20 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
   
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient,private xhrBackend: HttpXhrBackend) { 
+  
     this.currentUserSubject = new BehaviorSubject<User | null>(JSON.parse(localStorage.getItem('currentUser')!));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
 
   login(credentials: any): Observable<User> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
+
     
-    return this.http.post<User>(apiUrl, credentials, httpOptions);
+    return this.http.post<User>(apiUrl, credentials);
     
   }
 
-
-  loginbcm(credentialbcm: any): Observable<TokenModel> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    
-    return this.http.post<TokenModel>(API_AUTH_URL, credentialbcm,);
-    
-  }
 
 
   changePassword(credentials: any): Observable<Message> {
@@ -91,3 +77,5 @@ export class AuthService {
     }
   }
 }
+
+

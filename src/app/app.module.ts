@@ -29,6 +29,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { UpdatePasswordComponent } from './update-password/update-password.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { UpdatePasswordComponent } from './update-password/update-password.compo
     FluxSortantComponent,
     UpdateDialogComponent,
     UpdatePasswordComponent,
+    ProfileComponent,
 
   ],
   imports: [
