@@ -38,6 +38,11 @@ export class UpdatePasswordComponent {
 
       this.authService.changePassword(formData).subscribe(
         response => {
+          this.message = response.message;
+          this.showErrorMessage = true;
+          if (this.message) {
+            this.showErrorAlert(this.message);
+          }
           // Handle success, e.g., show a success message
           console.log('Password changed successfully', response);
         },
